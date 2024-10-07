@@ -1,0 +1,136 @@
+﻿@model StudentDashboard3.Models.StudentModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="">
+    <div class="row">
+        <!-- Left Column: Registration Form -->
+        <div class="col-md-6 w-50">
+            <h2 id="studentFormHeading" >Register</h2>
+            <form id="studentForm" class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", id = "FirstName" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "MiddleName" } })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", id = "LastName" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.Gender, new SelectList(new[]
+                        {
+                            new { Value = "Male", Text = "Male" },
+                            new { Value = "Female", Text = "Female" },
+                            new { Value = "Others", Text = "Others" }
+                        }, "Value", "Text"), new { @class = "form-control", id = "Gender" })
+                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", id = "DOB" } })
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", id = "Address" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PinCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.PinCode, new { htmlAttributes = new { @class = "form-control", id = "PinCode" } })
+                        @Html.ValidationMessageFor(model => model.PinCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button type="submit" class="btn btn-primary" id="submitForm">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Column: Student Grid -->
+        <div class="col-md-6">
+            <h2>Student List</h2>
+            <div class="d-grid gap-3 text-center my-3">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <button class="btn btn-danger" onclick="deleteBasedOfSelect()">Delete</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-info" onclick="editBasedOfSelect()">Edit</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="copyBasedOfSelect()">Copy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table id="studentTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th><input id="selectAll" type="checkbox" /></th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>DOB</th>
+                                <th>Address</th>
+                                <th>Pin Code</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<!-- jQuery script for making AJAX request -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Scripts/StudentCRUDOps.js"></script>

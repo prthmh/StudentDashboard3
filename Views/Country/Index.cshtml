@@ -1,0 +1,76 @@
+﻿@model StudentDashboard3.Models.CountryModel
+
+@{
+    ViewBag.Title = "Country Register";
+}
+
+<div class="">
+    <div class="row">
+        <!-- Left Column: Registration Form -->
+        <div class="col-md-6 w-50">
+            <h2 id="countryFormHeading">Register Country</h2>
+            <form id="countryForm" class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "Name" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button type="submit" class="btn btn-primary" id="submitCountryForm">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Column: Country Grid -->
+        <div class="col-md-6">
+            <h2>Country List</h2>
+            <div class="d-grid gap-3 text-center my-3">
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <button class="btn btn-danger" onclick="deleteCountryBasedOfSelect()">Delete</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-info" onclick="editCountryBasedOfSelect()">Edit</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="copyCountryBasedOfSelect()">Copy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table id="countryTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th><input id="selectAllCountry" type="checkbox" /></th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<!-- jQuery script for making AJAX request -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/Scripts/CountryCRUDOps.js"></script>
